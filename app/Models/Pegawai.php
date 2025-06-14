@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TataUsaha extends Model
+class Pegawai extends Model
 {
     //
 }

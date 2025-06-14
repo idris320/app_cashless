@@ -22,6 +22,10 @@
 
     <!-- Datatables -->
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    
+
+    <!-- SweetAlert CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Libraries Stylesheet -->
     <link href="{{ asset('') }}/bootstrap/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">

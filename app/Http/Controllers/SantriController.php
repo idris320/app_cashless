@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\santri;
+use App\Models\Santri as ModelsSantri;
+use App\Models\WaliSantri;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SantriController extends Controller
 {
@@ -12,7 +15,9 @@ class SantriController extends Controller
      */
     public function index()
     {
-        return view('santri');
+        $data = Santri::with('wali')->get();    
+        $ws = WaliSantri::get();
+        return view('santri.santri', compact('data','ws'));
     }
 
     /**
@@ -21,6 +26,7 @@ class SantriController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -28,18 +34,65 @@ class SantriController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->role == 'santri'){
+            // dd($request->all());
+            $validator = Validator::make($request->all(), [
+                'id' => 'required',
+                'role' => 'required',
+                'nama' => 'required',
+                'alamat' => 'required',                
+                'tempat_lahir' => 'required',
+                'tanggal_lahir' => 'required',
+                'jenis_kelamin' => 'required',
+                'wali_santri' => 'required'
+            ]);
 
-        dd($request->all());
-        // $data['id'] = $request->id;
-        // $data['nama'] = $request->nama;
-        // $data['alamat'] = $request->alamat;
-        // $data['tempat_lahir'] = $request->tempatLahir;
-        // $data['tanggal_lahir'] = $request->ttl;
-        // $data['jenis_kelamin'] = $request->jk;
-        // $data['status'] = 'aktif';
+            if ($validator->fails()){
+                return redirect()->back()->withInput()->withErrors($validator);
+                // dd('Validasi gagal', $validator->errors());
+            }
 
-        // var_dump($data);
+            $data = [
+                'id' => $request->id,
+                'nama' => $request->nama,
+                'alamat' => $request->alamat,
+                'tempat_lahir' => $request->tempat_lahir,
+                'tanggal_lahir' => $request->tanggal_lahir,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'id_wali' => $request->wali_santri,
+                'status' => 'aktif'
+            ];
+            
+            Santri::create($data);
+            return redirect(route('santri.index'))->with('success', 'Data Santri Berhasil Ditambahkan');
+
+            // dd($data);
+            
+        }elseif($request->role == 'wali'){
+            $validator = Validator::make($request->all(), [
+                'id_wali' => 'required',
+                'nama' => 'required',
+                'alamat' => 'required',
+                'no_telp' => 'required',
+                'email' => 'required'
+            ]);
+
+            if ($validator->fails()){
+                return redirect()->back()->withInput()->withErrors($validator);
+            }
+
+            $data = [
+                'id' => $request->id_wali,
+                'nama' => $request->nama,
+                'alamat' => $request->alamat,
+                'no_telp' => $request->no_telp,
+                'email' => $request->email
+            ];
+
+            WaliSantri::create($data);
+            return redirect(route('santri.index'))->with('success', 'Data Wali Santri Berhasil Ditambahkan');
+        }
+        return 'ada yang salah';
     }
 
     /**
@@ -53,24 +106,63 @@ class SantriController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(santri $santri)
+    public function edit(Santri $id)
     {
-        //
+        $data = Santri::with('wali')->find($id);        
+        $walis = WaliSantri::all();
+        // $data = Santri::find($id);
+        return view('santri.santriupdate', compact('data', 'walis'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, santri $santri)
+    public function update(Request $request, santri $santri, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'role' => 'required',
+            'nama' => 'required',
+            'alamat' => 'required',                
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+            'jenis_kelamin' => 'required',
+            'wali_santri' => 'required',
+            'status' => 'required'
+        ]);
+
+        if ($validator->fails()){
+            return redirect()->back()->withInput()->withErrors($validator);
+            // dd('Validasi gagal', $validator->errors());
+        }
+
+        $data = [            
+            'nama' => $request->nama,
+            'alamat' => $request->alamat,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'status' => $request->status,
+            'id_wali' => $request->wali_santri,
+        ];
+
+        Santri::whereId($id)->update($data);
+        return redirect(route('santri.index'))->with('success','Data Berhasil Diubah');        
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(santri $santri)
+    public function destroy(santri $santri, $id)
     {
         //
+        $data = Santri::find($id);
+        if($data){
+            $data->delete();
+            return redirect(route('santri.index'))->with('success', 'Data Santri Berhasil Dihapus');
+        }else{
+            return redirect(route('santri.index'))->with('error', 'Data gagal dihapus. ID tidak ditemukan.');
+        }
+
     }
 }

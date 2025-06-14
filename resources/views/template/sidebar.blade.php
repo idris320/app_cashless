@@ -28,11 +28,11 @@
             <a href="{{ route('topup.index') }}" class="nav-item nav-link">
                 <i class="fa fa-plus me-2"></i>Top Up
             </a>
-            <a href="{{ route('petugaskantin.index') }}" class="nav-item nav-link">
-                <i class="fa fa-cash-register me-2"></i>Petugas Kantin
+            <a href="{{ route('pegawai.index') }}" class="nav-item nav-link">
+                <i class="fa fa-user-tie me-2"></i>Pegawai
             </a>
-            <a href="{{ route('tatausaha.index') }}" class="nav-item nav-link">
-                <i class="fa fa-user-tie me-2"></i>Tata Usaha
+            <a href="{{ route('allUser.index') }}" class="nav-item nav-link">
+                <i class="fa fa-users me-2"></i>All Users
             </a>
             
             <!-- all dropdown -->

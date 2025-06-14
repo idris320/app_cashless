@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TataUsaha;
+use App\Models\Pegawai;
 use Illuminate\Http\Request;
 
-class TataUsahaController extends Controller
+class PegawaiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('tatausaha');
+        //
     }
 
     /**
@@ -34,7 +34,7 @@ class TataUsahaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TataUsaha $tataUsaha)
+    public function show(Pegawai $pegawai)
     {
         //
     }
@@ -42,7 +42,7 @@ class TataUsahaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TataUsaha $tataUsaha)
+    public function edit(Pegawai $pegawai)
     {
         //
     }
@@ -50,7 +50,7 @@ class TataUsahaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TataUsaha $tataUsaha)
+    public function update(Request $request, Pegawai $pegawai)
     {
         //
     }
@@ -58,7 +58,7 @@ class TataUsahaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TataUsaha $tataUsaha)
+    public function destroy(Pegawai $pegawai)
     {
         //
     }

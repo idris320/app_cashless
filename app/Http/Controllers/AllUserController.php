@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PetugasKantin;
+use App\Models\allUser;
 use Illuminate\Http\Request;
 
-class PetugasKantinController extends Controller
+class AllUserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('petugaskantin');
+        //
     }
 
     /**
@@ -34,7 +34,7 @@ class PetugasKantinController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PetugasKantin $petugasKantin)
+    public function show(allUser $allUser)
     {
         //
     }
@@ -42,7 +42,7 @@ class PetugasKantinController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PetugasKantin $petugasKantin)
+    public function edit(allUser $allUser)
     {
         //
     }
@@ -50,7 +50,7 @@ class PetugasKantinController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PetugasKantin $petugasKantin)
+    public function update(Request $request, allUser $allUser)
     {
         //
     }
@@ -58,7 +58,7 @@ class PetugasKantinController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PetugasKantin $petugasKantin)
+    public function destroy(allUser $allUser)
     {
         //
     }
