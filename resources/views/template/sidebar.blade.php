@@ -2,7 +2,7 @@
 <!-- Sidebar Start -->
 <div class="sidebar pe-4 pb-3">
     <nav class="navbar bg-light navbar-light">
-        <a href="index.html" class="navbar-brand mx-4 mb-3">
+        <a href="{{ route('dashboard') }}" class="navbar-brand mx-4 mb-3">
             <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>AL-FURQON</h3>
         </a>
         <div class="d-flex align-items-center ms-4 mb-4">
@@ -25,14 +25,17 @@
             <a href="{{ route('walisantri.index') }}" class="nav-item nav-link">
                 <i class="fa fa-user me-2"></i>Wali Santri
             </a>
-            <a href="{{ route('topup.index') }}" class="nav-item nav-link">
-                <i class="fa fa-plus me-2"></i>Top Up
-            </a>
             <a href="{{ route('pegawai.index') }}" class="nav-item nav-link">
                 <i class="fa fa-user-tie me-2"></i>Pegawai
             </a>
-            <a href="{{ route('allUser.index') }}" class="nav-item nav-link">
+            <a href="{{ route('alluser.index') }}" class="nav-item nav-link">
                 <i class="fa fa-users me-2"></i>All Users
+            </a>
+            <a href="{{ route('kartu.index') }}" class="nav-item nav-link">
+                <i class="fa fa-id-card me-2"></i>Kartu
+            </a>
+            <a href="{{ route('topup.index') }}" class="nav-item nav-link">
+                <i class="fa fa-plus me-2"></i>Top Up
             </a>
             
             <!-- all dropdown -->

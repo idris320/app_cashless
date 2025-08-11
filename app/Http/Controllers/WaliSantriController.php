@@ -47,7 +47,7 @@ class WaliSantriController extends Controller
 
         $data = [
             'id' => $request->id_wali,
-            'nama' => $request->nama,
+            'nama_wali' => $request->nama,
             'alamat' => $request->alamat,
             'no_telp' => $request->no_telp,
             'email' => $request->email
@@ -93,7 +93,7 @@ class WaliSantriController extends Controller
         }
 
         $data = [
-            'nama' => $request->nama,
+            'nama_wali' => $request->nama,
             'alamat' => $request->alamat,
             'no_telp' => $request->no_telp,
             'email' => $request->email

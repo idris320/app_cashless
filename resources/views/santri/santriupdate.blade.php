@@ -15,7 +15,7 @@
     @endif
         <div class="card bg-light text-dark">
             <div class="card-header d-flex justify-content-between align-items-center bg-light">
-                <span>Data Santri</span>            
+                <h5>Data Santri</h5>            
             </div>
             <div class="card-body ">  
                 @foreach ($data as $d)
@@ -30,7 +30,7 @@
                         <div class="col">
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama</label>
-                                <input type="text" class="form-control" id="nama" aria-describedby="nama" name="nama" value="{{ $d->nama }}">
+                                <input type="text" class="form-control" id="nama" aria-describedby="nama" name="nama" value="{{ $d->nama_santri }}">
                             </div>
                             <div class="mb-3">
                                 <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
@@ -66,7 +66,7 @@
                             <label for="wali_santri" class="form-label">Wali Santri</label>                            
                             <select id="wali_santri" class="form-select" name="wali_santri">
                             @foreach ($walis as $w)
-                            <option value="{{ $w->id }}" {{ $d->id_wali == $w->id ? 'selected' : ''}}>{{ $w->nama }}</option>                                
+                            <option value="{{ $w->id }}" {{ $d->id_wali == $w->id ? 'selected' : ''}}>{{ $w->nama_wali }}</option>                                
                             @endforeach
                             {{-- <option value="{{ $walis->id }}">{{ $walis->nama }}</option> --}}         
                             </select>                                                           

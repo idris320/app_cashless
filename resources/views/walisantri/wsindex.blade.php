@@ -24,7 +24,7 @@
         @endif
         <div class="card bg-light text-dark">
             <div class="card-header d-flex justify-content-between align-items-center bg-light">
-                <span>Data Wali Santri</span>
+                <h5>Data Wali Santri</h5>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">          
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahwalisantri"><i class="fas fa-plus"></i> Tamabah Data</button>
                 </div>
@@ -45,7 +45,7 @@
                         @foreach ($data as $index => $ws)
                         <tr>
                         <th scope="row">{{ $index + 1 }}</th>                        
-                        <td>{{ $ws->nama }}</td>
+                        <td>{{ $ws->nama_wali }}</td>
                         <td>{{ $ws->alamat }}</td>
                         <td>{{ $ws->no_telp }}</td>
                         <td>{{ $ws->email }}</td>
@@ -66,7 +66,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah data wali santri</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -88,7 +88,7 @@
                 </div>        
                 <div class="mb-3">
                 <label for="email" class="form-label">email</label>
-                <input type="text" class="form-control" id="email" required name="email">
+                <input type="email" class="form-control" id="email" required name="email">
                 </div>        
             </div>
             <div class="modal-footer">

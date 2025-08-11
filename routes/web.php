@@ -1,12 +1,14 @@
 <?php
 
+use App\Http\Controllers\AllUserController;
 use App\Models\Auth;
 use App\Models\allUser;
 use App\Http\Controllers\Dashboard;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopupController;
-use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\KartuController;
 use App\Http\Controllers\SantriController;
+use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\WaliSantriController;
 use App\Models\WaliSantri;
 
@@ -37,7 +39,10 @@ route::get('/pegawai.{id}.edit', [PegawaiController::class, 'edit'])->name('pega
 route::put('/pegawai.{id}.update', [PegawaiController::class, 'update'])->name('pegawai.update');
 route::delete('/pegawai.{id}.', [PegawaiController::class, 'destroy'])->name('pegawai.destroy');
 
+route::get('/kartu.index', [KartuController::class, 'index'])->name('kartu.index');
+
+
 route::get('/topup.index', [TopupController::class, 'index'])->name('topup.index');
 
 
-route::get('/allUser.index', [allUser::class, 'index'])->name('allUser.index');
+route::get('/alluser.index', [AllUserController::class, 'index'])->name('alluser.index');

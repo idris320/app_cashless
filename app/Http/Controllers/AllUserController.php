@@ -12,7 +12,8 @@ class AllUserController extends Controller
      */
     public function index()
     {
-        //
+        // $data = allUser::get();
+        return view('allUser.userindex');
     }
 
     /**

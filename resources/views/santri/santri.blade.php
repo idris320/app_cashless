@@ -13,9 +13,15 @@
       });
   </script>
 @endif
+<style>
+  .custom-btn {
+    padding: 2px 8px;
+    font-size: 12px;
+  }
+</style>
     <div class="card bg-light text-dark">
         <div class="card-header d-flex justify-content-between align-items-center bg-light">
-          <span>Data Santri</span>
+          <h>Data Santri</h>
           <div class="d-grid gap-2 d-md-flex justify-content-md-end">          
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahwalisantri"><i class="fas fa-plus"></i> Data Wali Santri</button>
             <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#tambahsantri"><i class="fas fa-plus"></i> Data Santri</button>
@@ -40,16 +46,16 @@
                   @foreach ($data as $index => $s)
                   <tr>
                   <th scope="row">{{ $index + 1 }}</th>
-                  <td>{{ $s->nama }}</td>                  
-                  <td>{{ $s->wali->nama }}</td>                  
+                  <td>{{ $s->nama_santri }}</td>                  
+                  <td>{{ $s->wali->nama_wali }}</td>                  
                   <td>{{ $s->tempat_lahir }}</td>                  
                   <td>{{ $s->tanggal_lahir }}</td>                  
                   <td>{{ $s->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan'}}</td>                  
                   <td>{{ $s->alamat }}</td>                  
                   <td>{{ $s->status }}</td>   
                   <td>
-                    <a href="{{ route('santri.edit', $s->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
-                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-destroy{{ $s->id }}"><i class="fas fa-trash"></i></button>
+                    <a href="{{ route('santri.edit', $s->id) }}" class="btn btn-sm btn-primary custom-btn"><i class="fas fa-edit"></i></a>
+                    <button type="button" class="btn btn-sm btn-danger custom-btn" data-bs-toggle="modal" data-bs-target="#modal-destroy{{ $s->id }}"><i class="fas fa-trash"></i></button>
                   </td>               
                   </tr>                    
                   @endforeach
@@ -129,7 +135,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah data wali santri</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -151,7 +157,7 @@
           </div>        
           <div class="mb-3">
             <label for="email" class="form-label">email</label>
-            <input type="text" class="form-control" id="email" required name="email">
+            <input type="email" class="form-control" id="email" required name="email">
           </div>        
       </div>
       <div class="modal-footer">

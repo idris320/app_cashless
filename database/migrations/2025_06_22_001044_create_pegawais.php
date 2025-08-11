@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('pegawais', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_pegawai', 100);
+            $table->string('alamat');
+            $table->string('no_telp', 15)->nullable();
+            $table->string('email', 50)->nullable();
+            $table->enum('posisi', ['admin','kasir'])->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

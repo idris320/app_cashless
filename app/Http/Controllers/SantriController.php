@@ -54,12 +54,12 @@ class SantriController extends Controller
 
             $data = [
                 'id' => $request->id,
-                'nama' => $request->nama,
+                'id_wali' => $request->wali_santri,
+                'nama_santri' => $request->nama,
                 'alamat' => $request->alamat,
                 'tempat_lahir' => $request->tempat_lahir,
                 'tanggal_lahir' => $request->tanggal_lahir,
                 'jenis_kelamin' => $request->jenis_kelamin,
-                'id_wali' => $request->wali_santri,
                 'status' => 'aktif'
             ];
             
@@ -83,7 +83,7 @@ class SantriController extends Controller
 
             $data = [
                 'id' => $request->id_wali,
-                'nama' => $request->nama,
+                'nama_wali' => $request->nama,
                 'alamat' => $request->alamat,
                 'no_telp' => $request->no_telp,
                 'email' => $request->email
@@ -137,13 +137,13 @@ class SantriController extends Controller
         }
 
         $data = [            
-            'nama' => $request->nama,
+            'id_wali' => $request->wali_santri,
+            'nama_santri' => $request->nama,
             'alamat' => $request->alamat,
             'tempat_lahir' => $request->tempat_lahir,
             'tanggal_lahir' => $request->tanggal_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
             'status' => $request->status,
-            'id_wali' => $request->wali_santri,
         ];
 
         Santri::whereId($id)->update($data);

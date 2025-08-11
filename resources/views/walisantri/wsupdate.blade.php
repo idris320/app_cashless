@@ -15,11 +15,7 @@
     @endif
     <div class="card bg-light text-dark">
         <div class="card-header d-flex justify-content-between align-items-center bg-light">
-            <span>Edit Data Wali Santri</span>
-            {{-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">          
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahwalisantri"><i class="fas fa-plus"></i> Data Wali Santri</button>
-            <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#tambahsantri"><i class="fas fa-plus"></i> Data Santri</button>
-            </div> --}}
+            <h5>Edit Data Wali Santri</h5>            
         </div>
         <div class="card-body ">      
             @foreach ($data as $d)                
