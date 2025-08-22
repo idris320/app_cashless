@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class PegawaiController extends Controller
@@ -29,37 +32,55 @@ class PegawaiController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        // dd($request->all());
+
+    {        
         $validator = Validator::make($request->all(), [
-            'id' => 'required',
-            'nama' => 'required',
-            'no_telp' => 'required',
-            'email' => 'required',
-            'alamat' => 'required',                
-            'posisi' => 'required',
+        'nama' => 'required',
+        'no_telp' => 'required',
+        'email' => 'required',
+        'alamat' => 'required',
+        'posisi' => 'required',
+        'password' => 'required|min:6',
         ]);
 
         if ($validator->fails()){
             return redirect()->back()->withInput()->withErrors($validator);
-            // dd('Validasi gagal', $validator->errors());
         }
 
-        
-        $data = [
-            'id' => $request->id,
-            'nama_pegawai' => $request->nama,
-            'alamat' => $request->alamat,
-            'no_telp' => $request->no_telp,
-            'email' => $request->email,
-            'posisi' => $request->posisi
-        ];
-        
+        if($request->posisi === 'admin'){
+            $user = User::create([
+                'id' => $request->idUser,
+                'username' => $request->no_telp,
+                'password' => Hash::make($request['password']),
+                'role' => 'admin'
+            ]);
+    
+    
+            Pegawai::create([
+                'id' => $request->id,
+                'iduser' => $user->id,
+                'nama_pegawai' => $request->nama,
+                'alamat' => $request->alamat,        
+                'no_telp' => $request->no_telp,
+                'email' => $request->email,
+                'posisi' => $request->posisi
+            ]);
+            return redirect(route('pegawai.index'))->with('success', 'Data Berhasil Ditambahkan');
+        }else{
+            Pegawai::create([
+                'id' => $request->id,
+                'iduser' => 0,
+                'nama_pegawai' => $request->nama,
+                'alamat' => $request->alamat,        
+                'no_telp' => $request->no_telp,
+                'email' => $request->email,
+                'posisi' => $request->posisi
+            ]);
+            return redirect(route('pegawai.index'))->with('success', 'Data Berhasil Ditambahkan');
+        }
+
 
         
-        Pegawai::create($data);
-        return redirect(route('pegawai.index'))->with('success', 'Data Berhasil Ditambahkan');
-
     }
 
     /**
@@ -84,30 +105,48 @@ class PegawaiController extends Controller
      */
     public function update(Request $request, Pegawai $pegawai, $id)
     {
+        $pegawai = Pegawai::with('user')->findOrFail($id);
+        $user    = $pegawai->user;
+
         $validator = Validator::make($request->all(), [
-            'id' => 'required',
-            'nama' => 'required',
-            'no_telp' => 'required',
-            'email' => 'required',
-            'alamat' => 'required',                
-            'posisi' => 'required',
+        'nama' => 'required',
+        'no_telp' => 'required',
+        'email' => 'required',
+        'alamat' => 'required',
+        'posisi' => 'required',       
         ]);
 
         if ($validator->fails()){
             return redirect()->back()->withInput()->withErrors($validator);
-            // dd('Validasi gagal', $validator->errors());
         }
 
-        $data = [            
-            'nama_pegawai' => $request->nama,
-            'no_telp' => $request->no_telp,
-            'email' => $request->email,
-            'alamat' => $request->alamat,
-            'posisi' => $request->posisi
-        ];
+        DB::beginTransaction();
 
-        Pegawai::whereId($id)->update($data);
-        return redirect(route('pegawai.index'))->with('success','Data Berhasil Diubah');        
+        try {
+            // Update data pegawai
+            $pegawai->nama_pegawai   = $request->nama;
+            $pegawai->alamat = $request->alamat;                    
+            if ($pegawai->no_telp !== $request->no_telp) {
+                $pegawai->no_telp  = $request->no_telp;
+                $user->username    = $request->no_telp;
+            }
+            $pegawai->email  = $request->email;
+
+            // Update password jika diisi
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password);
+            }
+
+            $pegawai->save();
+            $user->save();
+
+            DB::commit();
+
+            return redirect()->route('pegawai.index')->with('success', 'Data berhasil diperbarui.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withInput()->with('error', 'Gagal update: ' . $e->getMessage());
+        }
 
     }
 
@@ -116,12 +155,26 @@ class PegawaiController extends Controller
      */
     public function destroy(Pegawai $pegawai, $id)
     {
-        $data = Pegawai::find($id);
-        if($data){
-            $data->delete();
-            return redirect(route('pegawai.index'))->with('success', 'Data Berhasil Dihapus');
-        }else{
-            return redirect(route('pegawai.index'))->with('error', 'Data Gagal Dihapus');
+        DB::beginTransaction();
+
+        try {
+            $pegawai = Pegawai::findOrFail($id);
+
+            // Hapus user terkait
+            if ($pegawai->user) {
+                $pegawai->user->delete();
+            }
+
+            // Hapus pegawai
+            $pegawai->delete();
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Data pegawai dan user berhasil dihapus.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()->back()->with('error', 'Gagal menghapus data: ' . $e->getMessage());
         }
 
     }

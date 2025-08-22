@@ -19,11 +19,11 @@
             <a href="{{ route('dashboard') }}" class="nav-item nav-link">
                 <i class="fa fa-tachometer-alt me-2"></i>Dashboard
             </a>
-            <a href="{{ route('santri.index') }}" class="nav-item nav-link">
-                <i class="fas fa-user-graduate me-2"></i>Santri
-            </a>
             <a href="{{ route('walisantri.index') }}" class="nav-item nav-link">
                 <i class="fa fa-user me-2"></i>Wali Santri
+            </a>
+            <a href="{{ route('santri.index') }}" class="nav-item nav-link">
+                <i class="fas fa-user-graduate me-2"></i>Santri
             </a>
             <a href="{{ route('pegawai.index') }}" class="nav-item nav-link">
                 <i class="fa fa-user-tie me-2"></i>Pegawai

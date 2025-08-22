@@ -57,9 +57,13 @@
                         <select id="posisi" class="form-select" name="posisi">
                             <option value="">Pilih Posisi</option>                            
                             <option value="admin" {{ $d->posisi == 'admin' ? 'selected' : '' }}>Admin</option>
-                            <option value="kasir" {{ $d->posisi == 'kasir' ? 'selected' : '' }}>Kasir</option>
+                            <option value="staf" {{ $d->posisi == 'staf' ? 'selected' : '' }}>Staf</option>
                         </select>
-                    </div>                                       
+                    </div>  
+                    <div class="mb-3">
+                        <label for="alamat" class="form-label">Password</label>
+                        <input type="text" class="form-control" id="password" name="password">
+                    </div>                                     
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">          
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">          
                             <button class="btn btn-primary" type="submit"> Simpan Data</button>

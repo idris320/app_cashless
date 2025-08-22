@@ -11,9 +11,10 @@ class WaliSantri extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'walisantris';
+    protected $table = 'walisantri';
     protected $fillable = [
         'id',
+        'iduser',
         'nama',
         'alamat',
         'no_telp',

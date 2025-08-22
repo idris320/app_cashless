@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pegawais', function (Blueprint $table) {
+        Schema::create('pegawai', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('iduser');
             $table->string('nama_pegawai', 100);
             $table->string('alamat');
-            $table->string('no_telp', 15)->nullable();
+            $table->string('no_telp', 15);
             $table->string('email', 50)->nullable();
-            $table->enum('posisi', ['admin','kasir'])->nullable();
+            $table->enum('posisi', ['admin','staf']);
             $table->timestamps();
             $table->softDeletes();
         });
+
     }
 
     /**
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pegawais');
+        //
     }
 };

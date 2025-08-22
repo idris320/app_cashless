@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\WaliSantri;
+use App\Models\allUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 use function PHPUnit\Framework\returnSelf;
@@ -38,22 +40,34 @@ class WaliSantriController extends Controller
             'nama' => 'required',
             'alamat' => 'required',
             'no_telp' => 'required',
-            'email' => 'required'
+            'email' => 'required',
+            'password' => 'required'
         ]);
 
         if ($validator->fails()){
             return redirect()->back()->withInput()->withErrors($validator);
         }
 
+        $user = [
+            'id' => $request->idUser,
+            'username' => $request->no_telp,
+            'password' => Hash::make($request['password']),
+            'role' => 'wali'
+        ];
+
         $data = [
             'id' => $request->id_wali,
+            'iduser' => $request->idUser,
             'nama_wali' => $request->nama,
             'alamat' => $request->alamat,
             'no_telp' => $request->no_telp,
-            'email' => $request->email
+            'email' => $request->email,            
         ];
+        
 
-        WaliSantri::create($data);
+        dd($user, $data);
+        // allUser::create($user);
+        // WaliSantri::create($data);
         return redirect(route('walisantri.index'))->with('success', 'Data Wali Santri Berhasil Ditambahkan');
     }
 

@@ -1,0 +1,232 @@
+:root {
+            --primary-color: #2c5c1f;
+            --secondary-color: #4a7c59;
+            --accent-color: #8aaae5;
+            --gold-color: #d4af37;
+            --cream-color: #f8f4e3;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .login-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            min-height: 500px;
+        }
+        
+        .logo-section {
+            background: linear-gradient(rgba(44, 92, 31, 0.9), rgba(44, 92, 31, 0.8)), url('https://images.unsplash.com/photo-1591886730011-9b658f8206f9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            flex: 1;
+        }
+        
+        .logo-placeholder {
+            width: 120px;
+            height: 120px;
+            background: var(--cream-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 16px;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .logo-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+            color: var(--gold-color);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo-subtitle {
+            font-size: 18px;
+            text-align: center;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .visisub {
+            font-size: 15px;
+            text-align: center;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        
+        .quote {
+            font-style: italic;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .form-section {
+            padding: 40px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--cream-color);
+        }
+        
+        .form-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+            height: 58px; /* Tinggi yang sama untuk semua input group */
+        }
+        
+        .input-group-text {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px 0 0 8px;
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 15px;
+            height: 100%; /* Mengisi tinggi parent */
+        }
+        
+        .form-control {
+            border-radius: 0 8px 8px 0;
+            padding: 16px 20px;
+            border: 1px solid #ddd;
+            transition: all 0.3s;
+            height: 100%; /* Mengisi tinggi parent */
+            box-sizing: border-box;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(44, 92, 31, 0.25);
+        }
+        
+        .form-floating {
+            flex-grow: 1;
+            height: 100%; /* Mengisi tinggi parent */
+        }
+        
+        .form-floating > label {
+            padding: 1rem 0.75rem;
+            height: 100%; /* Mengisi tinggi parent */
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-floating > .form-control {
+            height: 100%; /* Mengisi tinggi parent */
+            padding: 1rem 0.75rem;
+        }
+        
+        .form-floating > .form-control:focus ~ label,
+        .form-floating > .form-control:not(:placeholder-shown) ~ label {
+            transform: scale(0.85) translateY(-0.9rem) translateX(0.15rem);
+        }
+        
+        .btn-login {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border: none;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(44, 92, 31, 0.4);
+        }
+        
+        .forgot-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: block;
+            text-align: right;
+            margin-top: 10px;
+        }
+        
+        .forgot-link:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .divider span {
+            padding: 0 15px;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+            }
+            
+            .logo-section, .form-section {
+                padding: 30px;
+            }
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #777;
+        }

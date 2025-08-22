@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('walisantris', function (Blueprint $table) {
+        Schema::create('all_users', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_wali', 100);
-            $table->string('alamat');
-            $table->string('no_telp', 15)->nullable();
-            $table->string('email', 50)->nullable();
+            $table->string('username', 50);
+            $table->string('password', 255);
+            $table->enum('role', ['admin','wali_santri']);
             $table->timestamps();
             $table->softDeletes();
         });
+
     }
 
     /**
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('wali_santris');
+        //
     }
 };

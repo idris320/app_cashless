@@ -22,6 +22,19 @@
             });
         </script>
         @endif
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+            <script>
+                Swal.fire({
+                    title: 'Error',
+                    text: '{{ $error }}',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            </script>
+            @endforeach
+        @endif
         <div class="card bg-light text-dark">
             <div class="card-header d-flex justify-content-between align-items-center bg-light">
                 <h5>Data Pegawai</h5>
@@ -65,7 +78,7 @@
 
     <!--Modal Tambah Data baru-->  
     <div class="modal fade" id="tambahdatapegawai" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah data pegawai</h1>
@@ -75,6 +88,7 @@
                 <form method="POST" action="{{ route('pegawai.store') }}">
                     @csrf
                     <input type="hidden" class="form-control" id="id" name="id" value="{{ random_int(100000, 999999) }}">                    
+                    <input type="hidden" class="form-control" id="idUser" name="idUser" value="{{ random_int(100000, 999999) }}">                    
                     <div class="mb-3">
                     <label for="nama" class="form-label">Nama</label>
                     <input type="text" class="form-control" id="nama" required name="nama">
@@ -82,6 +96,9 @@
                     <div class="mb-3">
                         <label for="no_telp" class="form-label">No Telp</label>
                         <input type="text" class="form-control" id="no_telp" required name="no_telp">
+                        <div class="text-danger">
+                        *No telpon sekaligus menjadi username untuk login
+                    </div>
                     </div>        
                     <div class="mb-3">
                         <label for="email" class="form-label">email</label>
@@ -96,9 +113,13 @@
                         <select id="posisi" class="form-select" name="posisi">
                             <option value="">Pilih Posisi</option>                            
                             <option value="admin">Admin</option>
-                            <option value="kasir">Kasir</option>
+                            <option value="staf">staf</option>
                         </select>
-                    </div>        
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" required name="password">
+                    </div>  
                 </div>
                 <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Save changes</button>

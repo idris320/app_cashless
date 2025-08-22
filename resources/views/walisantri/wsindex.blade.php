@@ -63,7 +63,7 @@
 
     <!--Modal Tambah Data Wali Santri baru-->  
 <div class="modal fade" id="tambahwalisantri" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah data wali santri</h1>
@@ -72,23 +72,31 @@
             <div class="modal-body">
             <form method="POST" action="{{ route('walisantri.store') }}">
                 @csrf
+                <input type="hidden" class="form-control" id="idUser" name="idUser" value="{{ random_int(100000, 999999) }}">
                 <input type="hidden" class="form-control" id="id_wali" name="id_wali" value="{{ random_int(100000, 999999) }}">
                 <input type="hidden" name="role" value="wali">
                 <div class="mb-3">
-                <label for="nama" class="form-label">Nama</label>
-                <input type="text" class="form-control" id="nama" required name="nama">
+                    <label for="nama" class="form-label">Nama</label>
+                    <input type="text" class="form-control" id="nama" required name="nama">
                 </div>        
                 <div class="mb-3">
-                <label for="alamat" class="form-label">Alamat</label>
-                <input type="text" class="form-control" id="alamat" required name="alamat">
+                    <label for="alamat" class="form-label">Alamat</label>
+                    <input type="text" class="form-control" id="alamat" required name="alamat">
                 </div>        
                 <div class="mb-3">
-                <label for="noTelp" class="form-label">No Telp</label>
-                <input type="text" class="form-control" id="noTelp" required name="no_telp">
+                    <label for="noTelp" class="form-label">No Telp</label>
+                    <input type="text" class="form-control" id="noTelp" required name="no_telp">
+                    <div class="text-danger">
+                        *No telpon sekaligus menjadi username untuk orang tua login
+                    </div>
                 </div>        
                 <div class="mb-3">
-                <label for="email" class="form-label">email</label>
-                <input type="email" class="form-control" id="email" required name="email">
+                    <label for="email" class="form-label">email</label>
+                    <input type="email" class="form-control" id="email" required name="email">
+                </div>        
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" required name="password">
                 </div>        
             </div>
             <div class="modal-footer">

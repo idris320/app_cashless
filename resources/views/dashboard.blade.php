@@ -2,6 +2,16 @@
 @include('template.sidebar')
 @include('template.topbar')
 
+@if (session('success'))
+        <script>
+            Swal.fire({
+                title: 'Success',
+                text: '{{ session('success') }}, {{ auth()->user()->name }}',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        </script>
+        @endif
 
             <!-- Sale & Revenue Start -->
             <div class="container-fluid pt-4 px-4">
