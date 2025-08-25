@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon -->
     <link href="{{ asset('') }}/bootstrap/img/user.jpg" rel="icon">
@@ -36,14 +37,114 @@
 
     <!-- Template Stylesheet -->
     <link href="{{ asset('') }}/bootstrap/css/style.css" rel="stylesheet">
+    
+    <style>
+        /* Ubah warna teks link pagination */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: #28a745 !important; /* Hijau Bootstrap */
+}
+
+/* Ubah warna saat aktif (halaman yang sedang dipilih) */
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: #28a745 !important;
+    color: white !important;
+    border: 1px solid #28a745 !important;
+}
+
+/* Hover effect */
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: #218838 !important;
+    color: white !important;
+    border: 1px solid #218838 !important;
+
+}
+
+/* Ganti warna biru default dengan hijau */
+.btn-primary {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+}
+
+.bg-primary {
+  background-color: #28a745 !important;
+}
+
+.text-primary {
+  color: #28a745 !important;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  color: #28a745 !important;
+  background-color: rgba(7, 44, 12, 0.1) !important;
+}
+
+.nav-link.active {
+  color: white !important;
+  background-color: #28a745 !important;
+}
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+}
+
+:root {
+    --primary: #28a745 !important;
+    --light: #F3F6F9;
+    --dark: #191C24;
+}
+
+
+    </style>
 </head>
 
 <body>
     <div class="container-xxl position-relative bg-white d-flex p-0">
+        
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
         <!-- Spinner End -->
+
+        @if (session('successLogin'))
+        <script>
+            Swal.fire({
+                title: 'Success',
+                text: '{{ session('successLogin') }}, {{ auth()->user()->nama }}',
+                icon: 'success',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#28a745'
+            });
+        </script>
+        @endif
+
+        {{-- alert isi form --}}
+        @if (session('success'))
+        <script>
+            Swal.fire({
+                title: 'Success',
+                text: '{{ session('success') }}',
+                icon: 'success',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#28a745'
+            });
+        </script>
+        @elseif (session('error'))
+        <script>
+            Swal.fire({
+                title: 'Error',
+                text: '{{ session('error') }}',
+                icon: 'error',
+                confirmButtonText: 'OK'
+                confirmButtonColor: '#f5171700'
+            });
+        </script>
+        @endif

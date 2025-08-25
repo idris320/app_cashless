@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Controllers\AllUserController;
 use App\Models\Auth;
 use App\Models\allUser;
+use App\Models\WaliSantri;
 use App\Http\Controllers\Dashboard;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TopupController;
-use App\Http\Controllers\KartuController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\KartuController;
+use App\Http\Controllers\TopupController;
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\SantriController;
+use App\Http\Controllers\AllUserController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\WaliSantriController;
-use App\Models\WaliSantri;
 
 // Public routes
 Route::get('/', function () {
@@ -54,12 +55,19 @@ Route::middleware('auth')->group(function () {
         route::delete('/pegawai.{id}.', [PegawaiController::class, 'destroy'])->name('pegawai.destroy');
 
         route::get('/kartu.index', [KartuController::class, 'index'])->name('kartu.index');
+        route::post('/kartu.store', [KartuController::class, 'store'])->name('kartu.store');
+        route::put('/kartu.update', [KartuController::class, 'update'])->name('kartu.update');
+        route::post('/kartu.topup', [KartuController::class, 'topup'])->name('kartu.topup');
+        Route::post('/kartu.update-status', [KartuController::class, 'updateStatus'])->name('kartu.update-status');
+        Route::post('/kartu.{id}.update-password', [KartuController::class, 'updatePassword'])->name('kartu.update-password');
+
+        
 
 
         route::get('/topup.index', [TopupController::class, 'index'])->name('topup.index');
 
 
-        route::get('/alluser.index', [AllUserController::class, 'index'])->name('alluser.index');
+        route::get('/barang.index', [BarangController::class, 'index'])->name('barang.index');
     });
 
 

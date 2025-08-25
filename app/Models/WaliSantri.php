@@ -15,7 +15,7 @@ class WaliSantri extends Model
     protected $fillable = [
         'id',
         'iduser',
-        'nama',
+        'nama_wali',
         'alamat',
         'no_telp',
         'email',
@@ -23,5 +23,10 @@ class WaliSantri extends Model
 
     public function santri(){
     return $this->hasMany(Santri::class, 'id_wali');
+    }
+
+    public function User()
+    {
+        return $this->belongsTo(User::class, 'iduser');
     }
 }

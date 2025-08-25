@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\allUser;
+use App\Models\transaksi;
 use Illuminate\Http\Request;
 
-class AllUserController extends Controller
+class TransaksiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // $data = allUser::get();
-        return view('allUser.userindex');
+        //
     }
 
     /**
@@ -35,7 +34,7 @@ class AllUserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(allUser $allUser)
+    public function show(transaksi $transaksi)
     {
         //
     }
@@ -43,7 +42,7 @@ class AllUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(allUser $allUser)
+    public function edit(transaksi $transaksi)
     {
         //
     }
@@ -51,7 +50,7 @@ class AllUserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, allUser $allUser)
+    public function update(Request $request, transaksi $transaksi)
     {
         //
     }
@@ -59,7 +58,7 @@ class AllUserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(allUser $allUser)
+    public function destroy(transaksi $transaksi)
     {
         //
     }

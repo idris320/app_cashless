@@ -14,7 +14,7 @@ class Santri extends Model
     protected $table = 'santris';
     protected $fillable = [
         'id',
-        'nama',
+        'nama_santri',
         'alamat',
         'tempat_lahir',
         'tanggal_lahir',
@@ -25,5 +25,15 @@ class Santri extends Model
 
     public function wali(){        
         return $this->belongsTo(WaliSantri::class, 'id_wali'); 
+    }
+
+    public function kartu()
+    {
+        return $this->hasOne(Kartu::class, 'id_santri');
+    }
+
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class, 'id_santri');
     }
 }

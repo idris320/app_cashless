@@ -7,18 +7,40 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- SweetAlert CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <link href="{{ asset('css/login.css') }}" rel="stylesheet">
 </head>
 <body>
-        @if($errors->any())
-                    <div class="alert alert-danger">
-                        {{ $errors->first() }}
-                    </div>
-                @endif
+    @if (session('successLogout'))
+        <script>
+            Swal.fire({
+                title: 'Success',
+                text: '{{ session('successLogout') }}',
+                icon: 'success',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#28a745'
+            });
+        </script>
+    @endif
+    
+        @if($errors->any())            
+            <script>
+                Swal.fire({
+                    title: 'Error',
+                    text: '{{ $errors->first() }}',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#28a745'
+                });
+            </script>                            
+        @endif
     <div class="login-container">
         <div class="logo-section">
             <div class="logo-placeholder">
-                PONDOK PESANTREN AL-FURQON
+                <img class="rounded-circle" src="{{ asset('image/logoPonpes.png') }}" alt=""  style="width: 150px; height: 150px;">
             </div>
             <h1 class="logo-title">PONDOK PESANTREN</h1>
             <h2 class="logo-subtitle">AL-FURQON</h2>
@@ -74,6 +96,8 @@
         </div>
     </div>
 
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

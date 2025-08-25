@@ -2,17 +2,20 @@
 @include('template.sidebar')
 @include('template.topbar')
 
-<div class="container-fluid pt-4 px-4"> 
-    @if (session('success'))
-    <script>
-        Swal.fire({
-            title: 'Success',
-            text: '{{ session('success') }}',
-            icon: 'success',
-            confirmButtonText: 'OK'
-        });
-    </script>
-    @endif
+<div class="container-fluid pt-4 px-4">     
+
+    @if ($errors->any())
+            @foreach ($errors->all() as $error)
+            <script>
+                Swal.fire({
+                    title: 'Error',
+                    text: '{{ $error }}',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            </script>
+            @endforeach
+        @endif
     <div class="card bg-light text-dark">
         <div class="card-header d-flex justify-content-between align-items-center bg-light">
             <h5>Edit Data Wali Santri</h5>            
@@ -26,8 +29,8 @@
                 <input type="hidden" name="role" value="wali">
                 <div class="mb-3">
                     <label for="nama" class="form-label">Nama</label>
-                    <input type="text" class="form-control" id="nama" required value="{{ $d->nama }}" name="nama">
-                </div>        
+                    <input type="text" class="form-control" id="nama_wali" required value="{{ $d->nama_wali }}" name="nama_wali">
+                </div>
                 <div class="mb-3">
                     <label for="alamat" class="form-label">Alamat</label>
                     <input type="text" class="form-control" id="alamat" required value="{{ $d->alamat }}" name="alamat">
@@ -39,6 +42,10 @@
                 <div class="mb-3">
                     <label for="email" class="form-label">email</label>
                     <input type="email" class="form-control" id="email" required value="{{ $d->email }}" name="email">
+                </div> 
+                <div class="mb-3">
+                    <label for="password" class="form-label">password</label>
+                    <input type="password" class="form-control" id="password" name="password">
                 </div> 
                 <div class="mb-3">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">          

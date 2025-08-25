@@ -2,26 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class kartu extends Model
+class Transaksi extends Model
 {
-    use SoftDeletes;
     use HasFactory;
+    use SoftDeletes;
 
-    protected $table = 'kartu';
+    protected $table = 'transaksi';
     protected $fillable = [
         'id',
         'id_santri',
-        'no_kartu',
-        'pin',
-        'saldo',
-        'tanggal_aktivasi',
-        'tanggal_perubahan',
-        'status',
-        'keterangan'
+        'id_pegawai',
+        'jenis',
+        'total',
+        'saldo_awal',
+        'saldo_akhir',
+        'tanggal_transaksi',
     ];
 
     public function santri()

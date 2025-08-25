@@ -2,26 +2,23 @@
 @include('template.sidebar')
 @include('template.topbar')
 
-<div class="container-fluid pt-4 px-4"> 
-        @if (session('success'))
-        <script>
-            Swal.fire({
-                title: 'Success',
-                text: '{{ session('success') }}',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-        </script>
-        @elseif (session('error'))
-        <script>
-            Swal.fire({
-                title: 'Error',
-                text: '{{ session('error') }}',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        </script>
+<div class="container-fluid pt-4 px-4">         
+
+        {{-- error input --}}
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+            <script>
+                Swal.fire({
+                    title: 'Error',
+                    text: '{{ $error }}',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#218838'
+                });
+            </script>
+            @endforeach
         @endif
+
         <div class="card bg-light text-dark">
             <div class="card-header d-flex justify-content-between align-items-center bg-light">
                 <h5>Data Wali Santri</h5>
@@ -61,6 +58,8 @@
         </div>
     </div>
 
+
+
     <!--Modal Tambah Data Wali Santri baru-->  
 <div class="modal fade" id="tambahwalisantri" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -72,7 +71,7 @@
             <div class="modal-body">
             <form method="POST" action="{{ route('walisantri.store') }}">
                 @csrf
-                <input type="hidden" class="form-control" id="idUser" name="idUser" value="{{ random_int(100000, 999999) }}">
+                <input type="hidden" class="form-control" id="id_user" name="id_user" value="{{ random_int(100000, 999999) }}">
                 <input type="hidden" class="form-control" id="id_wali" name="id_wali" value="{{ random_int(100000, 999999) }}">
                 <input type="hidden" name="role" value="wali">
                 <div class="mb-3">
@@ -85,7 +84,7 @@
                 </div>        
                 <div class="mb-3">
                     <label for="noTelp" class="form-label">No Telp</label>
-                    <input type="text" class="form-control" id="noTelp" required name="no_telp">
+                    <input type="text" class="form-control" id="no_telp" required name="no_telp">
                     <div class="text-danger">
                         *No telpon sekaligus menjadi username untuk orang tua login
                     </div>
@@ -118,7 +117,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            Anda Yakin Ingin Menghapus Data <b>{{ $d->nama }}</b>
+            Anda Yakin Ingin Menghapus Data <b>{{ $d->nama_wali }}</b>
         </div>
         <div class="modal-footer">
             <form action="{{ route('walisantri.destroy', $d->id ) }}" method="POST">

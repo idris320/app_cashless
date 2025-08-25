@@ -41,7 +41,7 @@
                                 <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="{{ $d->tanggal_lahir }}">
                             </div>                            
                             <div class="mb-3">
-                                <label for="status" class="form-label">Jenis Kelamin</label>
+                                <label for="status" class="form-label">Status</label>
                                 <select id="status" class="form-select" name="status">
                                 <option value="aktif" {{ $d->status == 'aktif' ? 'selected' : '' }}>Aktif</option>
                                 <option value="tidak aktif" {{ $d->status == 'tidak aktif' ? 'selected' : '' }}>Tidak Aktif</option>
@@ -66,7 +66,7 @@
                             <label for="wali_santri" class="form-label">Wali Santri</label>                            
                             <select id="wali_santri" class="form-select" name="wali_santri">
                             @foreach ($walis as $w)
-                            <option value="{{ $w->id }}" {{ $d->id_wali == $w->id ? 'selected' : ''}}>{{ $w->nama_wali }}</option>                                
+                            <option value="{{ $w->id }}" {{ $d->id_wali == $w->id ? 'selected' : ''}}>{{ $w->nama_wali }}, {{ $w->no_telp }}</option>                                
                             @endforeach
                             {{-- <option value="{{ $walis->id }}">{{ $walis->nama }}</option> --}}         
                             </select>                                                           

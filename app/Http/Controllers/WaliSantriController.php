@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\WaliSantri;
-use App\Models\allUser;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 use function PHPUnit\Framework\returnSelf;
@@ -41,33 +42,30 @@ class WaliSantriController extends Controller
             'alamat' => 'required',
             'no_telp' => 'required',
             'email' => 'required',
-            'password' => 'required'
+            'password' => 'required|min:6',
         ]);
 
         if ($validator->fails()){
             return redirect()->back()->withInput()->withErrors($validator);
         }
 
-        $user = [
-            'id' => $request->idUser,
+        $user = User::create([
+            'id' => $request->id_user,
             'username' => $request->no_telp,
             'password' => Hash::make($request['password']),
-            'role' => 'wali'
-        ];
+            'role' => 'wali_santri'
+        ]);
 
-        $data = [
+        $data = WaliSantri::create([
             'id' => $request->id_wali,
-            'iduser' => $request->idUser,
+            'iduser' => $user->id,
             'nama_wali' => $request->nama,
             'alamat' => $request->alamat,
             'no_telp' => $request->no_telp,
-            'email' => $request->email,            
-        ];
-        
+            'email' => $request->email
+        ]);
 
-        dd($user, $data);
-        // allUser::create($user);
-        // WaliSantri::create($data);
+        
         return redirect(route('walisantri.index'))->with('success', 'Data Wali Santri Berhasil Ditambahkan');
     }
 
@@ -92,29 +90,49 @@ class WaliSantriController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, WaliSantri $waliSantri, $id)
+    public function update(Request $request, WaliSantri $walisantri, $id)
     {
+        $walisantri = WaliSantri::with('user')->findOrFail($id);
+        $user    = $walisantri->user;
+
         $validator = Validator::make($request->all(), [
-            'id_wali' => 'required',
-            'nama' => 'required',
+            'nama_wali' => 'required',
             'alamat' => 'required',
             'no_telp' => 'required',
-            'email' => 'required'
+            'email' => 'required',
         ]);
 
         if ($validator->fails()){
             return redirect()->back()->withInput()->withErrors($validator);
         }
 
-        $data = [
-            'nama_wali' => $request->nama,
-            'alamat' => $request->alamat,
-            'no_telp' => $request->no_telp,
-            'email' => $request->email
-        ];
+        DB::beginTransaction();
 
-        WaliSantri::whereId($id)->update($data);
-        return redirect(route('walisantri.index'))->with('success', 'Data Berhasil Diubah');
+        try {
+            // Update data walisantri
+            $walisantri->nama_wali   = $request->nama_wali;
+            $walisantri->alamat = $request->alamat;                    
+            if ($walisantri->no_telp !== $request->no_telp) {
+                $walisantri->no_telp  = $request->no_telp;
+                $user->username    = $request->no_telp;
+            }
+            $walisantri->email  = $request->email;
+
+            // Update password jika diisi
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password);
+            }
+
+            $walisantri->save();
+            $user->save();
+
+            DB::commit();
+
+            return redirect()->route('walisantri.index')->with('success', 'Data berhasil diperbarui.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withInput()->with('error', 'Gagal update: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -122,18 +140,26 @@ class WaliSantriController extends Controller
      */
     public function destroy(WaliSantri $waliSantri, $id)
     {
-        $wali = WaliSantri::with('santri')->find($id);
+        DB::beginTransaction();
 
-        if (!$wali) {
-            return redirect()->route('walisantri.index')->with('error', 'Data tidak ditemukan.');
+        try {
+            $walisantri = WaliSantri::findOrFail($id);
+
+            // Hapus user terkait
+            if ($walisantri->user) {
+                $walisantri->user->delete();
+            }
+
+            // Hapus walisantri
+            $walisantri->delete();
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Data walisantri dan user berhasil dihapus.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()->back()->with('error', 'Gagal menghapus data: ' . $e->getMessage());
         }
-    
-        if ($wali->santri->count() > 0) {
-            return redirect()->route('walisantri.index')
-                ->with('error', 'Data tidak bisa dihapus karena masih digunakan oleh data santri.');
-        }
-    
-        $wali->delete();
-        return redirect()->route('walisantri.index')->with('success', 'Data berhasil dihapus.');
     }
 }

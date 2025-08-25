@@ -32,10 +32,10 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             if ($user->role === 'admin') {
-                return redirect()->intended('/dashboard');
+                return redirect()->intended('/dashboard')->with('successLogin', 'Selamat Datang');
             }
             
-            return redirect()->intended('/wali/dashboard');
+            return redirect()->intended('/wali/dashboard')->with('successLogin', 'Selamat Datang');
         }
 
         return back()->withErrors([
@@ -77,6 +77,6 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        return redirect('/')->with('successLogout', 'Berhasil logout');
     }
 }

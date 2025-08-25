@@ -2,26 +2,7 @@
 @include('template.sidebar')
 @include('template.topbar')
 
-<div class="container-fluid pt-4 px-4"> 
-        @if (session('success'))
-        <script>
-            Swal.fire({
-                title: 'Success',
-                text: '{{ session('success') }}',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-        </script>
-        @elseif (session('error'))
-        <script>
-            Swal.fire({
-                title: 'Error',
-                text: '{{ session('error') }}',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        </script>
-        @endif
+<div class="container-fluid pt-4 px-4">         
 
         @if ($errors->any())
             @foreach ($errors->all() as $error)
@@ -30,7 +11,8 @@
                     title: 'Error',
                     text: '{{ $error }}',
                     icon: 'error',
-                    confirmButtonText: 'OK'
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#218838'
                 });
             </script>
             @endforeach

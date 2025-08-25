@@ -2,25 +2,19 @@
 @include('template.sidebar')
 @include('template.topbar')
 
-<div class="container-fluid pt-4 px-4"> 
-        @if (session('success'))
-        <script>
-            Swal.fire({
-                title: 'Success',
-                text: '{{ session('success') }}',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-        </script>
-        @elseif (session('error'))
-        <script>
-            Swal.fire({
-                title: 'Error',
-                text: '{{ session('error') }}',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        </script>
+<div class="container-fluid pt-4 px-4">         
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+            <script>
+                Swal.fire({
+                    title: 'Error',
+                    text: '{{ $error }}',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            </script>
+            @endforeach
         @endif
 
 
@@ -62,7 +56,7 @@
                     </div>  
                     <div class="mb-3">
                         <label for="alamat" class="form-label">Password</label>
-                        <input type="text" class="form-control" id="password" name="password">
+                        <input type="password" class="form-control" id="password" name="password">
                     </div>                                     
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">          
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">          

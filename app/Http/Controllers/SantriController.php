@@ -15,7 +15,7 @@ class SantriController extends Controller
      */
     public function index()
     {
-        $data = Santri::with('wali')->get();    
+        $data = Santri::with('wali', 'kartu')->get();    
         $ws = WaliSantri::get();
         return view('santri.santri', compact('data','ws'));
     }
@@ -34,17 +34,17 @@ class SantriController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->role == 'santri'){
+        
             // dd($request->all());
             $validator = Validator::make($request->all(), [
                 'id' => 'required',
-                'role' => 'required',
+                'id_wali' => 'required',
                 'nama' => 'required',
                 'alamat' => 'required',                
                 'tempat_lahir' => 'required',
                 'tanggal_lahir' => 'required',
                 'jenis_kelamin' => 'required',
-                'wali_santri' => 'required'
+                'id_wali' => 'required'
             ]);
 
             if ($validator->fails()){
@@ -54,7 +54,7 @@ class SantriController extends Controller
 
             $data = [
                 'id' => $request->id,
-                'id_wali' => $request->wali_santri,
+                'id_wali' => $request->id_wali,
                 'nama_santri' => $request->nama,
                 'alamat' => $request->alamat,
                 'tempat_lahir' => $request->tempat_lahir,
@@ -63,36 +63,11 @@ class SantriController extends Controller
                 'status' => 'aktif'
             ];
             
+            // dd($data);
             Santri::create($data);
             return redirect(route('santri.index'))->with('success', 'Data Santri Berhasil Ditambahkan');
 
             // dd($data);
-            
-        }elseif($request->role == 'wali'){
-            $validator = Validator::make($request->all(), [
-                'id_wali' => 'required',
-                'nama' => 'required',
-                'alamat' => 'required',
-                'no_telp' => 'required',
-                'email' => 'required'
-            ]);
-
-            if ($validator->fails()){
-                return redirect()->back()->withInput()->withErrors($validator);
-            }
-
-            $data = [
-                'id' => $request->id_wali,
-                'nama_wali' => $request->nama,
-                'alamat' => $request->alamat,
-                'no_telp' => $request->no_telp,
-                'email' => $request->email
-            ];
-
-            WaliSantri::create($data);
-            return redirect(route('santri.index'))->with('success', 'Data Wali Santri Berhasil Ditambahkan');
-        }
-        return 'ada yang salah';
     }
 
     /**
