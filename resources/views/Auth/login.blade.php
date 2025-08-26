@@ -64,7 +64,7 @@
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
                     <div class="form-floating">
-                        <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                        <input type="password" class="form-control" id="password" autocomplete="off" placeholder="Password" name="password">
                         <label for="password">Password</label>
                     </div>
                 </div>

@@ -19,12 +19,13 @@
 @endif
     <div class="card bg-light text-dark">
         <div class="card-header d-flex justify-content-between align-items-center bg-light">
-          <h5>Data Santri</h5>
+          <h5>Data Kartu Santri</h5>
           <div class="d-grid gap-2 d-md-flex justify-content-md-end">                    
             <button class="btn btn-success mr-2" data-bs-toggle="modal" data-bs-target="#tambahkartu"><i class="fas fa-plus"></i> Data Kartu Santri</button>
           </div>
         </div>
-        <div class="card-body ">        
+        <div class="card-body "> 
+          <div class="table-responsive">         
             <table class="table table-hover text-dark" id="tabelku">
                 <thead>
                     <tr>
@@ -56,7 +57,8 @@
                 </tr>
                 @endforeach
                 </tbody>
-            </table>        
+            </table> 
+          </div>       
         </div>        
     </div>
 </div>
@@ -122,11 +124,11 @@
           </div>
           <div class="mb-3">
             <label for="no_kartu" class="form-label">No Kartu</label>
-            <input type="text" class="form-control" id="no_kartu" aria-describedby="namaHelp" name="no_kartu" autocomplete="new-password">            
+            <input type="text" class="form-control" id="no_kartu" autocomplete="off" aria-describedby="namaHelp" name="no_kartu" autocomplete="new-password">            
           </div>
           <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="isiPasswordKartudulu" name="password" autocomplete="new-password">
+            <label for="pin" class="form-label">Password</label>
+            <input type="password" class="form-control" id="isiPasswordKartudulu" name="pin" autocomplete="new-password">
           </div>          
           <div class="mb-3">
             <label for="datedaftar" class="form-label">Tanggal Aktivasi</label>
@@ -158,10 +160,10 @@
         <!-- Nav Tabs -->
         <ul class="nav nav-tabs" id="kartuTab" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="aktif-tab" data-bs-toggle="tab" data-bs-target="#password" type="button" role="tab">Ubah Password</button>
+            <button class="nav-link active text-success" id="aktif-tab" data-bs-toggle="tab" data-bs-target="#password" type="button" role="tab">Ubah Password</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="hilang-tab" data-bs-toggle="tab" data-bs-target="#gantikartu" type="button" role="tab">Ganti Kartu</button>
+            <button class="nav-link text-success" id="hilang-tab" data-bs-toggle="tab" data-bs-target="#gantikartu" type="button" role="tab">Ganti Kartu</button>
           </li>        
         </ul>
 
@@ -171,7 +173,7 @@
             <!-- Tabel atau konten kartu aktif -->
             <form method="POST" action="{{ route('kartu.update-password',$gk->id) }}" id="formKartu">
               @csrf
-              <input type="hidden" name="id_kartu" value="{{ $gk->id }}">
+              <input type="hidden" name="id_kartu_lama" value="{{ $gk->id }}">
               <input type="hidden" name="id_santri" value="{{ $gk->id_santri }}">
               <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>
@@ -196,22 +198,23 @@
 
           <!-- Tabel atau konten ganti Kartu -->
           <div class="tab-pane fade" id="gantikartu" role="tabpanel">
-             <!-- Tabel atau konten ganti kartu -->
-            <form method="POST" action="{{ route('kartu.update') }}" id="formKartu">
-              @csrf
-              <input type="hidden" name="id_kartu" value="{{ $gk->id }}">
+            <!-- Tabel atau konten ganti kartu -->
+            <form method="POST" action="{{ route('kartu.gantikartu') }}" id="formKartuBaru">
+              @csrf              
+              <input type="hidden" name="id_kartu_lama" value="{{ $gk->id }}">
               <input type="hidden" name="id_santri" value="{{ $gk->id_santri }}">
+              <input type="hidden" name="id_pegawai" value="{{ auth()->user()->IdPegawai }}">
               <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>
                 <input type="text" class="form-control" id="nama" aria-describedby="namaHelp" name="nama" disabled value="{{ $gk->santri->nama_santri }}">            
               </div>
               <div class="mb-3">
                 <label for="saldo" class="form-label">Saldo</label>
-                <input type="text" class="form-control" id="saldo" aria-describedby="namaHelp" disabled name="saldo" autocomplete="off" value="{{ $gk->saldo }}">            
+                <input type="text" class="form-control" id="saldo" aria-describedby="namaHelp" disabled name="saldo" autocomplete="off" value="{{ number_format($dk->saldo, 0, ',', '.') }}">            
               </div>   
               <div class="mb-3">
                 <label for="nama" class="form-label">No Kartu Lama</label>
-                <input type="text" class="form-control" id="no_kartu" aria-describedby="namaHelp" disabled name="no_kartu" autocomplete="off" value="{{ $gk->no_kartu }}">            
+                <input type="text" class="form-control" id="no_kartu_lama" aria-describedby="namaHelp" disabled name="no_kartu" autocomplete="off" value="{{ $gk->no_kartu }}">            
               </div>   
               <div class="mb-3">
                 <label for="kartu_baru" class="form-label">No Kartu Baru</label>
@@ -219,11 +222,15 @@
               </div>          
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="isiPassword" name="password" autocomplete="new-password">
-              </div>     
+                <input type="password" class="form-control" id="isiPasswordKartubaru" name="password" autocomplete="new-password">
+              </div>   
+              <div class="mb-3">
+                <label for="datedaftar" class="form-label">Tanggal Aktivasi</label>
+                <input type="date" class="form-control" id="datedaftar" name="tanggal_aktivasi" value="{{ date('Y-m-d') }}">
+              </div>   
               <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Keterangan</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="keterangan"></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="keterangan" placeholder="Contoh : Pengganti kartu hilang"></textarea>
               </div> 
               <button type="submit" class="btn btn-primary">Submit</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> 
@@ -250,6 +257,18 @@
     // Cegah submit jika Enter ditekan dan password belum diisi
     if (e.key === 'Enter') {
       const password = document.getElementById('isiPasswordKartudulu').value;
+      if (!password) {
+        e.preventDefault(); // Blok submit
+      }
+    }
+  });
+</script>
+
+<script>
+  document.getElementById('formKartuBaru').addEventListener('keydown', function(e) {
+    // Cegah submit jika Enter ditekan dan password belum diisi
+    if (e.key === 'Enter') {
+      const password = document.getElementById('isiPasswordKartubaru').value;
       if (!password) {
         e.preventDefault(); // Blok submit
       }

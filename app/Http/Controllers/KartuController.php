@@ -39,9 +39,9 @@ class KartuController extends Controller
             $validator = Validator::make($request->all(), [
                 'id_kartu' => 'required',
                 'id_santri' => 'required',
-                'no_kartu' => 'required',                             
+                'no_kartu' => 'required|unique:kartu,no_kartu',                             
                 'tanggal_aktivasi' => 'required',               
-                'password' => 'required|min:6',                
+                'pin' => 'required|min:6',                
             ]);     
 
             if ($validator->fails()){
@@ -89,9 +89,73 @@ class KartuController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, kartu $kartu)
+    public function gantikartu(Request $request, kartu $kartu)
     {
-        //
+        $validator = Validator::make($request->all(), [
+                'id_kartu_lama' => 'required',
+                'id_santri' => 'required',
+                'kartu_baru' => 'required|unique:kartu,no_kartu',                             
+                'tanggal_aktivasi' => 'required',               
+                'password' => 'required|min:6',
+                'keterangan' => 'required|max:100',
+            ]);     
+
+            if ($validator->fails()){
+                return redirect()->back()->withInput()->withErrors($validator);
+                // dd('Validasi gagal', $validator->errors());
+            }
+
+            try {
+            DB::transaction(function () use ($request) {
+            // Ambil kartu lama
+            $kartuLama = Kartu::where('id', $request->id_kartu_lama)
+                            ->where('id_santri', $request->id_santri)
+                            ->where('status', 'aktif')
+                            ->firstOrFail();
+
+            $saldoLama = $kartuLama->saldo;
+
+            // Nonaktifkan kartu lama
+            $kartuLama->update([
+                'saldo' => 0,
+                'status' => 'tidak aktif',
+                'tanggal_perubahan' => now()->format('Y-m-d'),
+                'keterangan' => $request->keterangan,
+            ]);
+
+            $kartuLama->delete();
+
+            // Buat kartu baru
+            Kartu::create([
+                'id' => $request->id_kartu,
+                'id_santri' => $request->id_santri,
+                'no_kartu' => $request->kartu_baru,
+                'pin' => Hash::make($request->pin),
+                'saldo' => $saldoLama,
+                'tanggal_aktivasi' => $request->tanggal_aktivasi,
+                'tanggal_perubahan' => '-',
+                'status' => 'aktif',
+                'keterangan' => 'Kartu Baru',
+            ]);
+
+            // Catat transaksi topup dari kartu lama
+            Transaksi::create([
+                'id' => random_int(100000, 999999),
+                'id_santri'         => $request->id_santri,
+                'id_pegawai'        => $request->id_pegawai,
+                'jenis'             => 'topup',
+                'total'             => $saldoLama,
+                'saldo_awal'        => 0,
+                'saldo_akhir'       => $saldoLama,
+                'tanggal_transaksi' => now()->format('Y-m-d'),                
+            ]);            
+        });
+
+        return redirect()->back()->with('success', 'Kartu berhasil diganti dan saldo lama telah dipindahkan.');
+    } catch (\Exception $e) {        
+        return redirect()->back()->with('error', 'Gagal mengganti kartu. Silakan periksa data dan coba lagi.');
+    }
+
     }
 
     public function updatePassword(Request $request, kartu $kartu, $id)
@@ -108,7 +172,7 @@ class KartuController extends Controller
         $data = [
             'id' => $id,
             'password' => Hash::make($request['password']),
-            'keterangan' => $request->keterangan
+            'keterangan' => 'Admin :'. $request->keterangan
         ];
 
         dd($data);

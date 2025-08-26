@@ -25,35 +25,37 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-hover text-dark" id="tabelku">
-                    <thead>
-                        <tr>
-                        <th scope="col">#</th>                        
-                        <th scope="col">Nama</th>                       
-                        <th scope="col">Alamat</th>
-                        <th scope="col">No Telpon</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Aksi</th>                  
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($data as $index => $d)
-                        <tr>
-                        <th scope="row">{{ $index + 1 }}</th>                        
-                        <td>{{ $d->nama_pegawai }}</td>
-                        <td>{{ $d->alamat }}</td>
-                        <td>{{ $d->no_telp }}</td>
-                        <td>{{ $d->email }}</td>
-                        <td>{{ $d->posisi }}</td>
-                        <td>
-                            <a href="{{ route('pegawai.edit', $d->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
-                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-destroy{{ $d->id }}"><i class="fas fa-trash"></i></button>
-                        </td>
-                        </tr>                            
-                        @endforeach
-                    </tbody>
-                </table>   
+                <div class="table-responsive">  
+                    <table class="table table-hover text-dark" id="tabelku">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>                        
+                            <th scope="col">Nama</th>                       
+                            <th scope="col">Alamat</th>
+                            <th scope="col">No Telpon</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Aksi</th>                  
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($data as $index => $d)
+                            <tr>
+                            <th scope="row">{{ $index + 1 }}</th>                        
+                            <td>{{ $d->nama_pegawai }}</td>
+                            <td>{{ $d->alamat }}</td>
+                            <td>{{ $d->no_telp }}</td>
+                            <td>{{ $d->email }}</td>
+                            <td>{{ $d->posisi }}</td>
+                            <td>
+                                <a href="{{ route('pegawai.edit', $d->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-destroy{{ $d->id }}"><i class="fas fa-trash"></i></button>
+                            </td>
+                            </tr>                            
+                            @endforeach
+                        </tbody>
+                    </table>   
+                </div>
             </div>
         </div>
 </div>
@@ -100,7 +102,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" required name="password">
+                        <input type="password" class="form-control" id="password" autocomplete="new-password" required name="password">
                     </div>  
                 </div>
                 <div class="modal-footer">

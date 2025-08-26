@@ -27,33 +27,35 @@
                 </div>
             </div>
             <div class="card-body ">        
-                <table class="table table-hover text-dark" id="tabelku">
-                    <thead>
-                        <tr>
-                        <th scope="col">#</th>                        
-                        <th scope="col">Nama</th>                       
-                        <th scope="col">Alamat</th>
-                        <th scope="col">No Telpon</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Aksi</th>                  
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($data as $index => $ws)
-                        <tr>
-                        <th scope="row">{{ $index + 1 }}</th>                        
-                        <td>{{ $ws->nama_wali }}</td>
-                        <td>{{ $ws->alamat }}</td>
-                        <td>{{ $ws->no_telp }}</td>
-                        <td>{{ $ws->email }}</td>
-                        <td>
-                            <a href="{{ route('walisantri.edit', $ws->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
-                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-destroy{{ $ws->id }}"><i class="fas fa-trash"></i></button>
-                        </td>
-                        </tr>                            
-                        @endforeach
-                    </tbody>
-                </table>        
+                <div class="table-responsive">  
+                    <table class="table table-hover text-dark" id="tabelku">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>                        
+                            <th scope="col">Nama</th>                       
+                            <th scope="col">Alamat</th>
+                            <th scope="col">No Telpon</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Aksi</th>                  
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($data as $index => $ws)
+                            <tr>
+                            <th scope="row">{{ $index + 1 }}</th>                        
+                            <td>{{ $ws->nama_wali }}</td>
+                            <td>{{ $ws->alamat }}</td>
+                            <td>{{ $ws->no_telp }}</td>
+                            <td>{{ $ws->email }}</td>
+                            <td>
+                                <a href="{{ route('walisantri.edit', $ws->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-destroy{{ $ws->id }}"><i class="fas fa-trash"></i></button>
+                            </td>
+                            </tr>                            
+                            @endforeach
+                        </tbody>
+                    </table>   
+                </div>     
             </div>        
         </div>
     </div>
@@ -95,7 +97,7 @@
                 </div>        
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" required name="password">
+                    <input type="password" class="form-control" id="password" autocomplete="new-password" required name="password">
                 </div>        
             </div>
             <div class="modal-footer">

@@ -11,6 +11,7 @@ use App\Http\Controllers\TopupController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\SantriController;
 use App\Http\Controllers\AllUserController;
+use App\Http\Controllers\DashboardWaliController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\WaliSantriController;
 
@@ -56,18 +57,17 @@ Route::middleware('auth')->group(function () {
 
         route::get('/kartu.index', [KartuController::class, 'index'])->name('kartu.index');
         route::post('/kartu.store', [KartuController::class, 'store'])->name('kartu.store');
-        route::put('/kartu.update', [KartuController::class, 'update'])->name('kartu.update');
+        route::post('/kartu.gantikartu', [KartuController::class, 'gantikartu'])->name('kartu.gantikartu');
         route::post('/kartu.topup', [KartuController::class, 'topup'])->name('kartu.topup');
         Route::post('/kartu.update-status', [KartuController::class, 'updateStatus'])->name('kartu.update-status');
         Route::post('/kartu.{id}.update-password', [KartuController::class, 'updatePassword'])->name('kartu.update-password');
-
         
 
-
-        route::get('/topup.index', [TopupController::class, 'index'])->name('topup.index');
-
-
         route::get('/barang.index', [BarangController::class, 'index'])->name('barang.index');
+    });
+
+    Route::middleware('check.role:wali_santri')->group(function () {
+        route::get('/dashboardwali', [DashboardWaliController::class, 'index'])->name('dashboardwali');
     });
 
 

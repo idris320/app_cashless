@@ -44,7 +44,8 @@
             <button class="btn btn-success mr-2" data-bs-toggle="modal" data-bs-target="#tambahsantri"><i class="fas fa-plus"></i> Data Santri</button>
           </div>
         </div>
-        <div class="card-body ">        
+        <div class="card-body ">  
+          <div class="table-responsive">      
             <table class="table table-hover text-dark" id="tabelku">
                 <thead>
                     <tr>
@@ -82,7 +83,8 @@
                   </tr>                    
                   @endforeach
                 </tbody>
-            </table>        
+            </table>  
+          </div>      
         </div>        
     </div>
 </div>
@@ -175,7 +177,8 @@
                     </div>            
                     <div class="mb-3">
                       <label for="id_wali" class="form-label">Wali Santri</label>
-                      <select id="id_wali" class="form-select" name="id_wali">                                            
+                      <select id="walisantriDropdown" class="form-select" name="id_wali">   
+                        <option value="">Wali Santri</option>
                       @foreach ($ws as $w)                                                
                         <option value="{{ $w->id }}">{{ $w->nama_wali }} , {{ $w->no_telp }}</option>                        
                         @endforeach                                    
@@ -285,6 +288,7 @@
           @endif
           <input type="hidden" name="id_santri" value="{{ $tu->id }}">
           <input type="hidden" name="id_pegawai" value="{{ auth()->user()->IdPegawai }}">
+
           <div class="mb-3">
             <label for="nama" class="form-label">Nama</label>
             <input type="text" class="form-control" id="nama" aria-describedby="namaHelp" name="nama" disabled value="{{ $tu->nama_santri }}">            
@@ -321,3 +325,18 @@
 
 
 @include('template.footer')
+
+<script>
+  $('#tambahsantri').on('shown.bs.modal', function () {
+  if (!$('#walisantriDropdown').hasClass("select2-hidden-accessible")) {
+    $('#walisantriDropdown').select2({
+      theme: 'bootstrap-5',
+      dropdownParent: $('#tambahsantri'),
+      placeholder: "Cari nama wali...",
+      allowClear: true,
+      width: '100%'
+    });
+  }
+});
+
+</script>

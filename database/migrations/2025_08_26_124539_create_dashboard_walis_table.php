@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('all_users', function (Blueprint $table) {
+        Schema::create('dashboard_walis', function (Blueprint $table) {
             $table->id();
-            $table->string('username', 50);
-            $table->string('password', 255);
-            $table->enum('role', ['admin','wali_santri','staf']);
             $table->timestamps();
-            $table->softDeletes();
         });
-
     }
 
     /**
@@ -27,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('dashboard_walis');
     }
 };
