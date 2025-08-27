@@ -64,7 +64,7 @@
                         </div>            
                         <div class="mb-3">
                             <label for="wali_santri" class="form-label">Wali Santri</label>                            
-                            <select id="wali_santri" class="form-select" name="wali_santri">
+                            <select id="walisantriDropdown" class="form-select" name="wali_santri">
                             @foreach ($walis as $w)
                             <option value="{{ $w->id }}" {{ $d->id_wali == $w->id ? 'selected' : ''}}>{{ $w->nama_wali }}, {{ $w->no_telp }}</option>                                
                             @endforeach
@@ -84,3 +84,17 @@
         </div>
 </div>
 @include('template.footer')
+
+<script>
+  $(document).ready(function () {
+    if (!$('#walisantriDropdown').hasClass("select2-hidden-accessible")) {
+      $('#walisantriDropdown').select2({
+        theme: 'bootstrap-5',
+        placeholder: "Cari nama wali...",
+        allowClear: true,
+        width: '100%'
+      });
+    }
+  });
+</script>
+

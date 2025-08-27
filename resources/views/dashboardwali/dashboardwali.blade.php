@@ -5,43 +5,24 @@
 
 <!-- Menu -->
             <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-line fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Today Sale</p>
-                                <h6 class="mb-0">$1234</h6>
+                <div class="row">
+                    @foreach ($data as $ds)
+                    <div class="col-md-6 mb-4">
+                        <div class="card text-white shadow-sm border-0 rounded-3" style="width: 18rem; background: linear-gradient(135deg, #52cf6f, #07f33a);">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold text-light">{{ $ds->nama_santri }}</h5>
+                                <p class="card-text">
+                                    Saldo <span class="fw-semibold">Rp.{{ number_format($ds->kartu->saldo, 0, ',', '.') }}</span>
+                                </p>
+                                <div class="d-flex justify-content-end">
+                                    <a href="#" class="btn btn-light btn-sm">
+                                        <i class="bi bi-eye"></i> Detail
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Total Sale</p>
-                                <h6 class="mb-0">$1234</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-area fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Today Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-pie fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Total Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
-                            </div>
-                        </div>
-                    </div>
+                    </div>                    
+                    @endforeach                                                      
                 </div>
             </div>
             <!-- Sale & Revenue End -->

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\transaksi;
+use App\Models\WaliSantri;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class TransaksiController extends Controller
 {
@@ -12,7 +15,10 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $idwali = $user->id_pegawai;
+        $data = WaliSantri::find($idwali)->transaksi()->with('detail', 'santri')->get();
+        return view('dashboardwali.transaksi', compact('data'));
     }
 
     /**

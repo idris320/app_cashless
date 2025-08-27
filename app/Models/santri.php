@@ -36,4 +36,6 @@ class Santri extends Model
     {
         return $this->hasMany(Transaksi::class, 'id_santri');
     }
+
+    
 }

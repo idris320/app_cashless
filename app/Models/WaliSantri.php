@@ -29,4 +29,17 @@ class WaliSantri extends Model
     {
         return $this->belongsTo(User::class, 'iduser');
     }
+
+    public function transaksi()
+    {
+        return $this->hasManyThrough(
+        Transaksi::class,     
+        Santri::class,        
+        'id_wali',            
+        'id_santri',         
+        'id',                
+        'id'                
+        );
+    }
+
 }

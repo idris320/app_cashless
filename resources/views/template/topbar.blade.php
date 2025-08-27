@@ -81,13 +81,18 @@
                     <span class="d-none d-lg-inline-flex">
                         {{ auth()->user()->nama }}
                     </span>
-                </a>
+                </a>                        
+                    
                 <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0"> 
+                    @if (auth()->user()->role === 'wali_santri')                   
+                        <a href="{{ route('dashboardwali.edit',auth()->user()->id_pegawai) }}" class="dropdown-item">Akun Saya</a>
+                    @else
+                        <a href="#" class="dropdown-item">Akun Kamu</a>
+                    @endif
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="dropdown-item">Logout</button>
-                    </form>                   
-                    
+                    </form> 
                 </div>
             </div>
         </div>

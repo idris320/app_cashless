@@ -62,17 +62,17 @@ class User extends Authenticatable
     }
 
     public function getIdPegawaiAttribute()
-{
-    if ($this->role === 'admin' && $this->pegawai) {
-        return $this->pegawai->id;
-    }
+    {
+        if ($this->role === 'admin' && $this->pegawai) {
+            return $this->pegawai->id;
+        }
 
-    if ($this->role === 'wali_santri' && $this->waliSantri) {
-        return $this->waliSantri->id;
-    }
+        if ($this->role === 'wali_santri' && $this->waliSantri) {
+            return $this->waliSantri->id;
+        }
 
-    return null;
-}
+        return null;
+    }
 
 
     public function isAdmin(): bool

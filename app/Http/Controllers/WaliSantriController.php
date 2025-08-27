@@ -40,7 +40,7 @@ class WaliSantriController extends Controller
             'id_wali' => 'required',
             'nama' => 'required',
             'alamat' => 'required',
-            'no_telp' => 'required',
+            'no_telp' => 'required|unique:all_users,username',
             'email' => 'required',
             'password' => 'required|min:6',
         ]);
@@ -48,15 +48,15 @@ class WaliSantriController extends Controller
         if ($validator->fails()){
             return redirect()->back()->withInput()->withErrors($validator);
         }
-
-        $user = User::create([
+        try{
+            $user = User::create([
             'id' => $request->id_user,
             'username' => $request->no_telp,
             'password' => Hash::make($request['password']),
             'role' => 'wali_santri'
         ]);
 
-        $data = WaliSantri::create([
+        WaliSantri::create([
             'id' => $request->id_wali,
             'iduser' => $user->id,
             'nama_wali' => $request->nama,
@@ -65,8 +65,12 @@ class WaliSantriController extends Controller
             'email' => $request->email
         ]);
 
-        
         return redirect(route('walisantri.index'))->with('success', 'Data Wali Santri Berhasil Ditambahkan');
+        } catch (\Exception $e) {        
+            return redirect()->back()->with('error', 'Gagal mengganti kartu. Silakan periksa data dan coba lagi.');
+        }
+
+        
     }
 
     /**

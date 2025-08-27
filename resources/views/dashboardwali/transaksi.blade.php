@@ -1,5 +1,5 @@
 @include('template.head')
-@include('template.sidebar')
+@include('template.sidebarwali')
 @include('template.topbar')
 
 <div class="container-fluid pt-4 px-4">         
@@ -30,11 +30,10 @@
                         <thead>
                             <tr>
                             <th scope="col">#</th>                        
-                            <th scope="col">Nama</th>                       
-                            <th scope="col">Alamat</th>
-                            <th scope="col">No Telpon</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Role</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Jenis Transaksi</th>                      
+                            <th scope="col">Jumlah</th>
+                            <th scope="col">Tanggal Transaksi</th>
                             <th scope="col">Aksi</th>                  
                             </tr>
                         </thead>
@@ -42,14 +41,14 @@
                             @foreach ($data as $index => $d)
                             <tr>
                             <th scope="row">{{ $index + 1 }}</th>                        
-                            <td>{{ $d->nama_pegawai }}</td>
-                            <td>{{ $d->alamat }}</td>
-                            <td>{{ $d->no_telp }}</td>
-                            <td>{{ $d->email }}</td>
-                            <td>{{ $d->posisi }}</td>
-                            <td>
-                                <a href="{{ route('pegawai.edit', $d->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
-                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-destroy{{ $d->id }}"><i class="fas fa-trash"></i></button>
+                            <td>{{ $d->santri->nama_santri }}</td>
+                            <td>{{ $d->jenis}}</td>                            
+                            <td class="{{ strtolower($d->jenis) === 'topup' ? 'text-success' : 'text-danger' }}">
+                                {{ $d->total }}
+                            </td>
+                            <td>{{ $d->tanggal_transaksi }}</td>                            
+                            <td>                                
+                                <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#modal-detail{{ $d->id }}"><i class="fas fa-eye"></i></button>
                             </td>
                             </tr>                            
                             @endforeach
@@ -59,4 +58,5 @@
             </div>
         </div>
 </div>
+
 @include('template.footer')
