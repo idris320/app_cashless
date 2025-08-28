@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon -->
-    <link href="{{ asset('') }}/bootstrap/img/user.jpg" rel="icon">
+    <link rel="icon" href="{{asset('image/logoPonpes.png')}}" type="image/png">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

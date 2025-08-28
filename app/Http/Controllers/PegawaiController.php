@@ -36,7 +36,7 @@ class PegawaiController extends Controller
     {        
         $validator = Validator::make($request->all(), [
         'nama' => 'required',
-        'no_telp' => 'required',
+        'no_telp' => 'required|unique:all_users,username',
         'email' => 'required',
         'alamat' => 'required',
         'posisi' => 'required',
@@ -46,41 +46,24 @@ class PegawaiController extends Controller
         if ($validator->fails()){
             return redirect()->back()->withInput()->withErrors($validator);
         }
-
-        if($request->posisi === 'admin'){
-            $user = User::create([
-                'id' => $request->idUser,
-                'username' => $request->no_telp,
-                'password' => Hash::make($request['password']),
-                'role' => 'admin'
-            ]);
-    
-    
-            Pegawai::create([
-                'id' => $request->id,
-                'iduser' => $user->id,
-                'nama_pegawai' => $request->nama,
-                'alamat' => $request->alamat,        
-                'no_telp' => $request->no_telp,
-                'email' => $request->email,
-                'posisi' => $request->posisi
-            ]);
-            return redirect(route('pegawai.index'))->with('success', 'Data Berhasil Ditambahkan');
-        }else{
-            Pegawai::create([
-                'id' => $request->id,
-                'iduser' => 0,
-                'nama_pegawai' => $request->nama,
-                'alamat' => $request->alamat,        
-                'no_telp' => $request->no_telp,
-                'email' => $request->email,
-                'posisi' => $request->posisi
-            ]);
-            return redirect(route('pegawai.index'))->with('success', 'Data Berhasil Ditambahkan');
-        }
-
-
         
+        $user = User::create([
+            'id' => $request->idUser,
+            'username' => $request->no_telp,
+            'password' => Hash::make($request['password']),
+            'role' => $request->posisi
+        ]);
+
+        Pegawai::create([
+            'id' => $request->id,
+            'iduser' => $user->id,
+            'nama_pegawai' => $request->nama,
+            'alamat' => $request->alamat,        
+            'no_telp' => $request->no_telp,
+            'email' => $request->email,
+            'posisi' => $request->posisi
+        ]);
+        return redirect(route('pegawai.index'))->with('success', 'Data Berhasil Ditambahkan');        
     }
 
     /**

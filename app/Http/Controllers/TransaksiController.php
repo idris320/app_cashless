@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Santri;
 use App\Models\transaksi;
 use App\Models\WaliSantri;
 use Illuminate\Http\Request;
@@ -15,9 +16,15 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $idwali = $user->id_pegawai;
-        $data = WaliSantri::find($idwali)->transaksi()->with('detail', 'santri')->get();
+        // $user = Auth::user();
+        // $idwali = $user->id_pegawai;
+        // $data = WaliSantri::find($idwali)->transaksi()->with('detail.barang', 'santri')->get();
+        // return view('dashboardwali.transaksi', compact('data'));
+    }
+
+    public function showSantri($id)
+    {
+        $data = Santri::with(['transaksi.detail.barang'])->findOrFail($id);
         return view('dashboardwali.transaksi', compact('data'));
     }
 

@@ -12,10 +12,17 @@
                             <div class="card-body">
                                 <h5 class="card-title fw-bold text-light">{{ $ds->nama_santri }}</h5>
                                 <p class="card-text">
-                                    Saldo <span class="fw-semibold">Rp.{{ number_format($ds->kartu->saldo, 0, ',', '.') }}</span>
+                                    Saldo <span class="fw-semibold">
+                                        @if ($ds->kartu)
+                                            Rp.{{ number_format($ds->kartu->saldo, 0, ',', '.') }}
+                                        @else
+                                            <span class="text-danger">Belum punya kartu</span>
+                                        @endif
+                                    </span>
                                 </p>
+
                                 <div class="d-flex justify-content-end">
-                                    <a href="#" class="btn btn-light btn-sm">
+                                    <a href="{{ route('transaksi.showSantri', $ds->id) }}" class="btn btn-light btn-sm">
                                         <i class="bi bi-eye"></i> Detail
                                     </a>
                                 </div>

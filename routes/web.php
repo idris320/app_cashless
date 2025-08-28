@@ -10,6 +10,7 @@ use App\Http\Controllers\KartuController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\SantriController;
 use App\Http\Controllers\DashboardWaliController;
+use App\Http\Controllers\KasirController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\WaliSantriController;
@@ -41,7 +42,6 @@ Route::middleware('auth')->group(function () {
         Route::put('/santri.{id}.update', [SantriController::class, 'update'])->name('santri.update');
         Route::delete('/santri.{id}', [SantriController::class, 'destroy'])->name('santri.destroy');
 
-
         Route::get('/walisantri.index', [WaliSantriController::class, 'index'])->name('walisantri.index');
         Route::post('/walisantri.store', [WaliSantriController::class, 'store'])->name('walisantri.store');
         Route::get('/walisantri.{id}.edit', [WaliSantriController::class, 'edit'])->name('walisantri.edit');
@@ -61,16 +61,23 @@ Route::middleware('auth')->group(function () {
         Route::post('/kartu.update-status', [KartuController::class, 'updateStatus'])->name('kartu.update-status');
         Route::post('/kartu.{id}.update-password', [KartuController::class, 'updatePassword'])->name('kartu.update-password');
         
-
         Route::get('/barang.index', [BarangController::class, 'index'])->name('barang.index');
+        Route::post('/barang.store', [BarangController::class, 'store'])->name('barang.store');
+        Route::post('/barang.{id}.update', [BarangController::class, 'update'])->name('barang.update');
+        Route::delete('/barang.{id}.destroy', [BarangController::class, 'destroy'])->name('barang.destroy');
+    });
+
+    Route::middleware(['auth','check.role:staf'])->group(function () {
+        Route::get('/kasir.index', [KasirController::class, 'index'])->name('kasir.index');
+        Route::post('/kasir.transaksi', [KasirController::class, 'transaksi'])->name('kasir.transaksi');
     });
 
     Route::middleware(['auth','check.role:wali_santri'])->group(function () {
         Route::get('/dashboardwali', [DashboardWaliController::class, 'index'])->name('dashboardwali');
         Route::get('/dashboardwali.{id}.edit', [DashboardWaliController::class, 'edit'])->name('dashboardwali.edit');
         Route::put('/dashboardwali.{id}.update', [DashboardWaliController::class, 'update'])->name('dashboardwali.update');
-
-        Route::get('/transaksi.index', [TransaksiController::class, 'index'])->name('transaksi.index');
+        
+        Route::get('/transaksi.{id}.showSantri', [TransaksiController::class, 'showSantri'])->name('transaksi.showSantri');
     });
 
 

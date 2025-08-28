@@ -87,7 +87,7 @@
                     @if (auth()->user()->role === 'wali_santri')                   
                         <a href="{{ route('dashboardwali.edit',auth()->user()->id_pegawai) }}" class="dropdown-item">Akun Saya</a>
                     @else
-                        <a href="#" class="dropdown-item">Akun Kamu</a>
+                        <a href="{{ route('pegawai.edit',auth()->user()->id_pegawai)}} "class="dropdown-item">Akun Saya</a>
                     @endif
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf

@@ -53,6 +53,10 @@ class User extends Authenticatable
             return $this->pegawai->nama_pegawai;
         }
 
+        if ($this->role === 'staf' && $this->pegawai) {
+            return $this->pegawai->nama_pegawai;
+        }
+
       
         if ($this->role === 'wali_santri' && $this->waliSantri) {
             return $this->waliSantri->nama_wali;
@@ -64,6 +68,10 @@ class User extends Authenticatable
     public function getIdPegawaiAttribute()
     {
         if ($this->role === 'admin' && $this->pegawai) {
+            return $this->pegawai->id;
+        }
+        
+        if ($this->role === 'staf' && $this->pegawai) {
             return $this->pegawai->id;
         }
 
@@ -78,6 +86,11 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
+    }
+
+    public function isStaf(): bool
+    {
+        return $this->role === 'staf';
     }
 
     public function isWaliSantri(): bool

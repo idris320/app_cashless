@@ -169,15 +169,12 @@ class KartuController extends Controller
             return redirect()->back()->withInput()->withErrors($validator);
         }
 
-        $data = [
-            'id' => $id,
-            'password' => Hash::make($request['password']),
+        $data = [           
+            'pin' => Hash::make($request['password']),
             'keterangan' => 'Admin :'. $request->keterangan
-        ];
+        ];       
 
-        dd($data);
-
-        Kartu::where($id)->update($data);
+        Kartu::whereId($id)->update($data);
         return redirect(route('kartu.index'))->with('success', 'password berhasil di Ubah');
     }
 

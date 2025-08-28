@@ -33,10 +33,10 @@ class AuthController extends Controller
 
             if ($user->role === 'admin') {
                 return redirect()->intended('/dashboard')->with('successLogin', 'Selamat Datang');
+            }elseif($user->role === 'staf'){
+                return redirect()->intended('/kasir.index')->with('successLogin', 'Selamat Datang');
             }elseif($user->role === 'wali_santri'){
                 return redirect()->intended('/dashboardwali')->with('successLogin', 'Selamat Datang');
-            }elseif($user->role === 'staf'){
-                
             }
             
         }
